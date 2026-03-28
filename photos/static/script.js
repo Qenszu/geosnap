@@ -20,7 +20,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
     subdomains: 'abcd',
     maxZoom: 20
 }).addTo(map);
-fetch('/api/photos/')
+fetch('/map/api/photos/')
     .then(response => response.json())
     .then(data => {
         L.geoJSON(data, {
@@ -99,7 +99,7 @@ function savePhoto(lat, lng) {
     formData.append('image', imageFile);
     formData.append('pointLocation', `POINT(${lng} ${lat})`);
 
-    fetch('/api/photos/', {
+    fetch('/map/api/photos/', {
         method: 'POST',
         headers: { 'X-CSRFToken': getCookie('csrftoken') },
         body: formData
@@ -154,7 +154,7 @@ function deletePhoto(photoId) {
 
     const csrftoken = getCookie("csrftoken");
 
-    fetch(`/api/photos/${photoId}/`, {
+    fetch(`/map/api/photos/${photoId}/`, {
         method: 'DELETE',
         headers: {
             'X-CSRFToken': csrftoken,
