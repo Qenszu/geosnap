@@ -1,7 +1,8 @@
-django>=5
-djangorestframework
-psycopg[binary]
-Pillow
-
+django>=5.0
 djangorestframework
 djangorestframework-gis
+django-filter
+psycopg[binary]
+Pillow
+dj-database-url==2.3.0
+gunicorn
