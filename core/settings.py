@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!9!yjsfufs97+cq5%!!4m&e^0(clt2ua)_z+=9(pde-!zym^oq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['geosnap.onrender.com', 'localhost', '127.0.0.1', '.onrender.com']
 
@@ -33,6 +33,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.ngrok-free.app',
     'https://*.ngrok-free.dev',
     'https://*.ngrok.io',
+    'https://geosnap-6qis.onrender.com', 
 ]
 
 
@@ -87,13 +88,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        # Pobierz link z DATABASE_URL (z Rendera)
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600
     )
 }
 
-if not DATABASES['default']:
+if DATABASES['default']:
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+if not os.environ.get('DATABASE_URL'):
     DATABASES['default'] = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'geosnap_db',
