@@ -5,4 +5,5 @@ django-filter
 psycopg[binary]
 Pillow
 dj-database-url==2.3.0
-gunicorn
+gunicorn    
+whitenoise==6.6.0
