@@ -22,11 +22,9 @@ from django.views.generic import RedirectView
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/map/', permanent=True)),
     path('admin/', admin.site.urls),
-    path('map/', include('photos.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-
+    path('map/', include('photos.urls')), 
+    path('', RedirectView.as_view(url='/map/', permanent=True)), 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
