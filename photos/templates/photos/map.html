@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mapa Gacek</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+    <div class="user-nav"
+        style="position: fixed; top: 20px; right: 20px; z-index: 9999; margin: 0; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 10px; align-items: center;">
+        {% if user.is_authenticated %}
+        <span class="welcome-text" style="color: #333; font-weight: bold;">Witaj, {{ user.username }}!</span>
+        <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+            {% csrf_token %}
+            <button type="submit"
+                style="background-color: #ff4d4d; color: white; padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto;">Wyloguj</button>
+        </form>
+        {% else %}
+        <a href="{% url 'login' %}"
+            style="background-color: #007bff; color: white; padding: 8px 15px; text-decoration: none; border-radius: 6px; font-weight: bold;">Zaloguj</a>
+        <a href="{% url 'signup' %}"
+            style="background-color: #28a745; color: white; padding: 8px 15px; text-decoration: none; border-radius: 6px; font-weight: bold;">Rejestracja</a>
+        {% endif %}
+    </div>
+    <h1>GeoMap</h1>
+    <button id="locate-btn" style="width: auto; margin-bottom: 10px; background-color: #0984e3;">
+        📍 Where I'm?</button>
+
+    <div id="map"></div>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const currentUser = "{{ user.username }}";
+        const isStaff = "{{ user.is_staff|yesno:'true,false' }}" === "true";
+    </script>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+
+</html>

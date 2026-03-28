@@ -1,0 +1,104 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Stylizacja pól formularza Django */
+form p {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4a5568;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #38a169;
+    box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
+}
+
+/* UKRYWANIE LUB STYLIZOWANIE OPISÓW HASEŁ */
+.helptext,
+.helptext ul {
+    font-size: 11px;
+    color: #718096;
+    margin-top: 5px;
+    padding-left: 0;
+    list-style: none;
+    line-height: 1.4;
+}
+
+/* Przycisk */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #38a169;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #2f855a;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.auth-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.auth-footer a {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: 600;
+}

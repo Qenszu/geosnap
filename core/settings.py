@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-!9!yjsfufs97+cq5%!!4m&e^0(clt2ua)_z+=9(pde-!zym^oq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '.ngrok-free.app']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'https://*.ngrok-free.dev',
+    'https://*.ngrok.io',
+]
 
 
 # Application definition
@@ -37,7 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis'
+    'django.contrib.gis',
+    'photos',
+    'rest_framework',
+    'rest_framework_gis',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +64,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,3 +129,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "photos" / "static"]
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
+
+LOGIN_REDIRECT_URL = '/map/'  
+LOGOUT_REDIRECT_URL = '/map/' 
