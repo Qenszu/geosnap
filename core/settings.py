@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-!9!yjsfufs97+cq5%!!4m&e^0(clt2ua)_z+=9(pde-!zym^oq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '.ngrok-free.app']
+
+CSRF_TRUSTED_ORIGINS = ['https://imprudent-harriette-formulaically.ngrok-free.app']
 
 
 # Application definition
@@ -123,5 +125,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "photos" / "static"]
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
