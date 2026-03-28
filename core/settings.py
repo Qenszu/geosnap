@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!9!yjsfufs97+cq5%!!4m&e^0(clt2ua)_z+=9(pde-!zym^oq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['geosnap.onrender.com', 'localhost', '127.0.0.1', '.onrender.com']
 
