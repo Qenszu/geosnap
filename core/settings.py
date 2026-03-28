@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,7 +85,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': dj_database_url.config(
+        # Pobierz link z DATABASE_URL (z Rendera)
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
+}
+
+if not DATABASES['default']:
+    DATABASES['default'] = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'geosnap_db',
         'USER': 'geosnap_user',
@@ -91,7 +101,6 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '5432'
     }
-}
 
 
 # Password validation
