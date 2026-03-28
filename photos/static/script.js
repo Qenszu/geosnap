@@ -25,12 +25,28 @@ fetch('/api/photos/')
     .then(data => {
         L.geoJSON(data, {
             onEachFeature: function (feature, layer) {
+                // Podstawowa treść dymka (dodane feature.properties.user)
                 let popupContent = `
-                        <div style="text-align: center;">
+                    <div style="text-align: center;">
                         <h3 style="margin-top: 0;">${feature.properties.title}</h3>
                         <img src="${feature.properties.image}" alt="${feature.properties.title}" style="max-width: 100%; height: auto; border-radius: 5px;">
-                        </div>
-                        `;
+                        <p style="margin-top: 0; font-size: 12px; color: gray;">
+                            Dodane przez: <b>${feature.properties.user}</b>
+                        </p>
+                    </div>
+                `;
+
+                // ZMIANA: Używamy feature.properties.user zamiast photo.user
+                if (currentUser === feature.properties.user || isStaff === true) {
+                    popupContent += `
+                        <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+                        <button onclick="deletePhoto(${feature.id})" 
+                                style="background-color: #ff4d4d; color: white; border: none; padding: 8px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold;">
+                            Usuń to zdjęcie
+                        </button>
+                    `;
+                }
+
                 layer.bindPopup(popupContent, { minWidth: 200, autoPan: true, autoPanPadding: [50, 50] });
             }
         }).addTo(map);
@@ -96,11 +112,12 @@ function savePhoto(lat, lng) {
                 .bindPopup(`
                         <div style="text-align: center;">
                         <h3 style="margin-top: 0;">${title}</h3>
-                        <img src="${imageUrl}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 5px;">
+                        <img src="${imageUrl}" alt="${title}" style="max-width: 200px; height: auto; border-radius: 5px;">
                         </div>
-                        `, { minWidth: 200, autoPan: true, autoPanPadding: [50, 50] }
+                        `, { minWidth: 200, autoPan: false }
                 )
                 .openPopup();
+            map.panBy([0, -50]);
         }
         else {
             alert("Something gone wrong with saving Photo")
@@ -108,12 +125,12 @@ function savePhoto(lat, lng) {
     });
 };
 
-document.getElementById('locate-btn').addEventListener('click', function(){
-    map.locate({setView: true, maxZoom:16})
+document.getElementById('locate-btn').addEventListener('click', function () {
+    map.locate({ setView: true, maxZoom: 16 })
 });
 
 let userLocationMarker;
-map.on('locationfound', function(e) {
+map.on('locationfound', function (e) {
     if (userLocationMarker) {
         map.removeLayer(userLocationMarker);
     }
@@ -124,8 +141,33 @@ map.on('locationfound', function(e) {
         fillColor: '#f03',
         fillOpacity: 0.5
     })
-    .addTo(map)
-    .bindPopup("Tu jesteś!")
-    .openPopup();
+        .addTo(map)
+        .bindPopup("Tu jesteś!")
+        .openPopup();
 });
 
+
+function deletePhoto(photoId) {
+    if (!confirm("Are you sure you want delete this photo?")) {
+        return;
+    }
+
+    const csrftoken = getCookie("csrftoken");
+
+    fetch(`/api/photos/${photoId}/`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                alert("Photo was delete");
+                window.location.reload();
+            } else {
+                alert("Error with deleting photo");
+            }
+        })
+        .catch(error => console.error('System error: ', error));
+}
