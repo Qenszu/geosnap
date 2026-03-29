@@ -5,6 +5,9 @@ from .serializers import PhotoSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework.exceptions import PermissionDenied
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
 # Create your views here.
 
 class PhotoList(generics.ListCreateAPIView):
@@ -40,3 +43,9 @@ def signup_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def create_admin(request):
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@gmail.com', 'Haslo12345')
+        return HttpResponse('Admin crated')
+    return HttpResponse('Admin already exist')
