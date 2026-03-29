@@ -89,7 +89,7 @@ button:active {
 
     h1 {
         font-size: 1.2rem; 
-        margin-top: 20px;
+        margin-top: 80px;
     }
 
     /* Powiększamy przyciski, żeby łatwiej było w nie trafić palcem (tzw. touch targets) */
