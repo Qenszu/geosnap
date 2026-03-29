@@ -29,8 +29,7 @@ class PhotoDetail(generics.RetrieveDestroyAPIView):
         
         instance.delete()
 
-            
-
+        
 def map_view(request):
     return render(request, 'photos/map.html')
 
@@ -44,8 +43,3 @@ def signup_view(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-def create_admin(request):
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser('admin', 'admin@gmail.com', 'Haslo12345')
-        return HttpResponse('Admin crated')
-    return HttpResponse('Admin already exist')
