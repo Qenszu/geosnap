@@ -16,6 +16,11 @@
 * **Dockerized:** Simple local setup using Docker and Docker Compose.
 
 ---
+## 📸 Preview
+
+![Preview](./geosnap1.png)
+
+---
 
 ## 🛠 Tech Stack
 
